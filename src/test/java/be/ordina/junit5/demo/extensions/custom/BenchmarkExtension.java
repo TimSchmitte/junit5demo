@@ -1,4 +1,4 @@
-package be.ordina.junit5.demo.extensions;
+package be.ordina.junit5.demo.extensions.custom;
 
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -24,48 +24,30 @@ public class BenchmarkExtension
 
     @Override
     public void beforeAll(ExtensionContext context) {
-        if (!shouldBeBenchmarked(context))
-            return;
-
         storeNowAsLaunchTime(context, LaunchTimeKey.CLASS);
     }
 
     @Override
     public void beforeTestExecution(ExtensionContext context) {
-        if (!shouldBeBenchmarked(context))
-            return;
-
         storeNowAsLaunchTime(context, LaunchTimeKey.TEST);
     }
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        if (!shouldBeBenchmarked(context))
-            return;
-
         long launchTime = loadLaunchTime(context, LaunchTimeKey.TEST);
         long elapsedTime = currentTimeMillis() - launchTime;
-        report("Test", context, elapsedTime);
+        log("Test", context, elapsedTime);
     }
 
     @Override
     public void afterAll(ExtensionContext context) {
-        if (!shouldBeBenchmarked(context))
-            return;
 
         long launchTime = loadLaunchTime(context, LaunchTimeKey.CLASS);
         long elapsedTime = currentTimeMillis() - launchTime;
-        report("Test container", context, elapsedTime);
+        log("Test container", context, elapsedTime);
     }
 
     // HELPER
-
-    private static boolean shouldBeBenchmarked(ExtensionContext context) {
-        return true;
-//        return context.getElement()
-//                .map(el -> isAnnotated(el, Benchmark.class))
-//                .orElse(false);
-    }
 
     private static void storeNowAsLaunchTime(ExtensionContext context, LaunchTimeKey key) {
         context.getStore(NAMESPACE).put(key, currentTimeMillis());
@@ -75,10 +57,9 @@ public class BenchmarkExtension
         return context.getStore(NAMESPACE).get(key, long.class);
     }
 
-    private static void report(String unit, ExtensionContext context, long elapsedTime) {
+    private static void log(String unit, ExtensionContext context, long elapsedTime) {
         String message = String.format("%s '%s' took %d ms.", unit, context.getDisplayName(), elapsedTime);
-//        LOGGER.info(message);
-        context.publishReportEntry("Benchmark", message);
+        LOGGER.info(message);
     }
     private enum LaunchTimeKey {
         CLASS, TEST

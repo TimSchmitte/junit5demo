@@ -5,6 +5,7 @@ import be.ordina.junit5.demo.spring.Bean1;
 import be.ordina.junit5.demo.spring.Bean2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.ResourceLock;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @SpringBootTest
+@ResourceLock("SpringContext")
 class SpringAndMockitoTest {
     @Mock
     private Bean1 bean1;

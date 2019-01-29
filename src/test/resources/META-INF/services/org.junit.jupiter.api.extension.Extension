@@ -1,1 +1,1 @@
-be.ordina.junit5.demo.extensions.BenchmarkExtension
+be.ordina.junit5.demo.extensions.custom.BenchmarkExtension

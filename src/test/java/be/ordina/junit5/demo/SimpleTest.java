@@ -1,10 +1,6 @@
 package be.ordina.junit5.demo;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -31,7 +27,8 @@ class SimpleTest {
         assertThat(helloSayer.hello("dude"), is("Hello, dude!"));
     }
     @Test
-    void helloNull(){
+    void helloNull(TestReporter testReporter){
+        testReporter.publishEntry("derp");
         assertThrows(IllegalArgumentException.class,
                 ()->helloSayer.hello(null),"str is Mandatory");
     }

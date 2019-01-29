@@ -1,6 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '2.0.5.RELEASE'
+        junit5version = '5.4.0-RC1'
     }
     repositories {
         mavenCentral()
@@ -23,25 +24,31 @@ repositories {
     mavenCentral()
 }
 
+ext{
+    junit5Version = '5.3.2'
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.apache.commons:commons-lang3:3.8'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
     //region Junit 5
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junit5version}"
     testImplementation 'junit:junit:4.12'
 
     //Engines can, and usually should be defined as runtime dependencies
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.1'    //Backwards compatibility!
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junit5version}"    //Backwards compatibility!
     //endregion
 
     testImplementation 'org.mockito:mockito-core:2.19.1'
     testImplementation 'org.mockito:mockito-junit-jupiter:2.19.1'
+    testImplementation("com.h2database:h2")
+
 }
 
 test {

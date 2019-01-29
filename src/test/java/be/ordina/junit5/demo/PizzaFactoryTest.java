@@ -17,7 +17,6 @@ class PizzaFactoryTest {
     }
 
     @Test
-    @Disabled
     void createQuattroStagioni() {
         final Pizza pizza = pizzaFactory.createQuattroStagioni();
         assertAll(
